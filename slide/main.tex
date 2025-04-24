@@ -43,9 +43,9 @@
 \usepackage{hyperref}
 
 % Title page information
-\title{Presentation Title}
-\subtitle{Subtitle}
-\author{Your Name}
+\title{Foundation of demand estimation}
+\subtitle{Theoretical and Empirical Study}
+\author{Ma Zhiyao}
 \institute{Hong Kong University of Science and Technology}
 \date{\today}
 
@@ -63,52 +63,435 @@
 
 % Section 1
 \section{Introduction}
-\begin{frame}{Introduction}
+\begin{frame}{1.Introduction: Why estimate demand?}
     \begin{itemize}
-        \item First point
-        \item Second point
-        \item Third point
+        \item Measuring Market Power
+
+        
+        Accurate demand elasticities are essential for computing markups and identifying firms’ pricing power.
+        \item Estimating Marginal Costs and Markups
+
+
+        Structural demand estimates are required to back out marginal costs using firms' first-order conditions in equilibrium models.
+        \item Simulating Counterfactual Policies
+
+
+        Demand models enable simulations of mergers, taxes, price regulations, and other policy interventions on market outcomes and consumer welfare.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{1.Introduction: Challenges}
+    \begin{itemize}
+        \item The endogeneity of price
+            \begin{align}
+            Q &= D(X, P, U) \tag{1.1} \\
+            P &= C(W, Q, V). \tag{1.2}
+                \end{align}
+        \item Demand for any one good generally depends on more than one latent demand shocks
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{1.Introduction: Challenges}
+    \begin{itemize}
+        \item LATE(Local average treatment effect)
+            \begin{align}
+            Q = S(W, P, V), 
+\frac{\partial P^*(X, W, U, V, \tau)}{\partial \tau} =
+\frac{ \frac{\partial S(W, P, V)}{\partial P} }
+{ \frac{\partial S(W, P, V)}{\partial P} + \left| \frac{\partial D(X, P, U)}{\partial P} \right| }.
+\tag{1.3}
+    \end{align}
+        \item Fixed effect and control function
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{1.Introduction: Solution}
+    \begin{itemize}
+        \item Use structural instrumental variables (e.g., BLP instruments, cost shifters) and moment conditions like
+        \begin{equation}
+\mathbb{E}[\xi_{jt} \cdot Z_{jt}] = 0 \tag{1.4}
+\end{equation}
+        \item Estimate a system-wide discrete choice model (e.g., multinomial logit, random coefficients logit) with full substitution structure
     \end{itemize}
 \end{frame}
 
 % Section 2
-\section{Methods}
-\begin{frame}{Methods}
-    \begin{block}{Important Block}
-        Key information goes here
+\section{Models}
+\begin{frame}{2.Models: RUM}
+    \begin{block}{Random utility model}
+        \begin{equation*}
+    u_{ij} = V_{ij} + \varepsilon_{ij}
+\end{equation*}
     \end{block}
     
     \begin{itemize}
-        \item Method 1
-        \item Method 2
+        \item 
+        \begin{align}
+q_{ij} &= \mathbf{1} \left\{ u_{ij} \geq u_{ik} \ \forall k \in \{0, 1, \ldots, J_i\} \right\}\tag{2.1}. \\[1em]
+s_{ij} &= \mathbb{E} \left[ q_{ij} \mid J_i, \chi_i \right]\tag{2.2} \\ 
+&= \int_{A_{ij}} dF_u \left( u_{i0}, u_{i1}, \ldots, u_{iJ_i} \mid J_i, \chi_i \right)\tag{2.2}. \\[1em]
+A_{ij} &= \left\{ \left( u_{i0}, u_{i1}, \ldots, u_{iJ_i} \right) \in \mathbb{R}^{J_i + 1} : u_{ij} \geq u_{ik} \ \forall k \right\}\tag{2.3}.
+\end{align}
     \end{itemize}
+\end{frame}
+
+\begin{frame}{2.Models: Canonical Model}
+    \begin{center}
+        \begin{align}
+            u_{ijt} &= x_{jt} \beta_{it} - \alpha_{it} p_{jt} + \xi_{jt} + \epsilon_{ijt}, && \text{for } j > 0 \tag{2.4} \\
+            u_{i0t} &= \epsilon_{i0t} \tag{2.5}
+        \end{align}
+
+        \vspace{1em}
+
+        \begin{equation}
+            s_{jt} = \int \frac{e^{x_{jt} \beta_{it} - \alpha_{it} p_{jt} + \xi_{jt}}}{\sum_{k=0}^{J_t} e^{x_{kt} \beta_{it} - \alpha_{it} p_{kt} + \xi_{kt}}} \, dF(\alpha_{it}, \beta_{it}; t)
+            \tag{2.6}
+        \end{equation}
+
+        \vspace{1em}
+
+        \begin{equation}
+            \beta_{it}^{(k)} = \beta_0^{(k)} + \beta_{\nu}^{(k)} \nu_{it}^{(k)} + \sum_{\ell=1}^{L} \beta_{d}^{(\ell, k)} d_{i \ell t}
+            \tag{2.7}
+        \end{equation}
+        \begin{equation}
+            \ln(\alpha_{it}) = \alpha_0 + \alpha_y y_{it} + \alpha_{\nu} \nu_{it}^{(0)}\tag{2.8},
+        \end{equation}
+    \end{center}
+\end{frame}
+
+\begin{frame}{2.Models:Canonical Model}
+    \begin{itemize}
+    \item Random coefficients are introduced in discrete choice models to address the limitations of models with only fixed coefficients.
+     \end{itemize}
+        \begin{align}
+u_{ijt} &= x_{jt} \beta_0 - \alpha p_{jt} + \xi_{jt} + \epsilon_{ijt} \tag{2.9} \\
+\delta_{jt} &= x_{jt} \beta_0 - \alpha p_{jt} + \xi_{jt} \tag{2.10} \\
+u_{ijt} &= \delta_{jt} + \epsilon_{ijt} \tag{2.11}
+\end{align}
 \end{frame}
 
 % Section 3
-\section{Results}
-\begin{frame}{Results}
-    \begin{columns}
-        \column{0.5\textwidth}
-        \begin{itemize}
-            \item Result 1
-            \item Result 2
-        \end{itemize}
-        
-        \column{0.5\textwidth}
-        % Placeholder for a figure
-        \centering
-        [Your figure here]
-    \end{columns}
+\section{Market level}
+\begin{frame}{3.Market level:Setting}
+In many applications, the key data are observed at the market level. Typically, one observes:
+\begin{itemize}
+    \item The number of goods \( J_t \) available to consumers in each market \( t \);
+    \item Their prices and other observable characteristics \( p_t, x_t \);
+    \item Their observed market shares \( \tilde{s}_{jt} \), typically measured as the total quantity of good \( j \) sold in market \( t \) divided by the number of consumers (e.g., households) in that market;
+    \item The distribution of consumer characteristics \( (d_{it}, y_{it}) \) in each market;
+    \item Possibly, additional variables \( w_t \) (e.g., cost shifters) that might serve as appropriate instruments.
+\end{itemize}
 \end{frame}
 
-% Section 4
-\section{Conclusion}
-\begin{frame}{Conclusion}
+\begin{frame}{3.Market level: BLP}
     \begin{itemize}
-        \item Main finding 1
-        \item Main finding 2
-        \item Future work
+        \item \textbf{Goal:} Estimate demand parameters \( \theta = (\theta_1, \theta_2) \)
+        \item \( \theta_1 = (\alpha_0, \beta_0) \): linear parameters
+        \item \( \theta_2 = (\beta_d, \beta_\nu) \): nonlinear parameters in random coefficients
+        \item \textbf{Key steps:}
+        \begin{enumerate}
+            \item Fix a trial \( \theta \)
+            \item Invert market shares \( \tilde{s}_{jt} \) to recover \( \delta_{jt}(\theta_2) \)
+            \item Recover unobserved \( \xi_{jt}(\theta) \)
+            \item Evaluate GMM objective
+        \end{enumerate}
     \end{itemize}
 \end{frame}
 
-\end{document} 
+\begin{frame}{3.Market level: BLP}
+    \textbf{GMM Objective:}
+    \begin{equation}
+        \min_{\theta} \quad g(\xi(\theta))' \Omega g(\xi(\theta)) \tag{3.1}
+    \end{equation}
+    \textbf{Moment condition:}
+    \begin{equation}
+        g(\xi(\theta)) = \frac{1}{N} \sum_{j,t} \xi_{jt}(\theta) z_{jt} \tag{3.2}
+    \end{equation}
+    \textbf{Constructing \( \xi_{jt}(\theta) \):}
+    \begin{equation}
+        \xi_{jt}(\theta) = \delta_{jt}(\theta_2) - x_{jt}'\beta + \alpha p_{jt} \tag{3.3}
+    \end{equation}
+\end{frame}
+
+\begin{frame}{3.Market level: BLP}
+    \textbf{Matching predicted to observed shares:}
+    \begin{equation}
+        \log(\tilde{s}_{jt}) = \log(\sigma_j(\delta_t, x_t, \theta_2, J_t)) \tag{3.4}
+    \end{equation}
+    \textbf{Predicted share function:}
+    \begin{equation}
+        \sigma_j(\cdot) = \int \frac{\exp[\delta_{jt}(\theta_2) + x_{jt}'\tilde{\beta}]}{1 + \sum_k \exp[\delta_{kt}(\theta_2) + x_{kt}'\tilde{\beta}]} f_{\tilde{\beta}}(\tilde{\beta}|\theta_2) d\tilde{\beta} \tag{3.5}
+    \end{equation}
+    \textbf{Solve for \( \delta_{jt} \) such that:}
+    \[ \sigma_j(\delta_t, x_t, \theta_2, J_t) = \tilde{s}_{jt} \]
+\end{frame}
+
+\begin{frame}{3.Market level: BLP}
+\begin{itemize}
+    \item \textbf{Cost Shifters}
+    \begin{itemize}
+        \item \textit{Definition:} Supply-side variables like input costs, taxes, or tariffs.
+        \item \textit{Advantage:} Clearly exogenous; commonly used in structural models.
+        \item \textit{Limitation:} Limited variation or measurement error possible.
+    \end{itemize}
+    
+    \item \textbf{BLP Instruments}
+    \begin{itemize}
+        \item \textit{Definition:} Characteristics of competing products (e.g., rival’s features).
+        \item \textit{Advantage:} Exploits substitution across products; widely accepted.
+        \item \textit{Limitation:} Requires independence from product-specific unobservables ($\xi_{jt}$).
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{3.Market level: BLP}
+\begin{itemize}
+    \item \textbf{Waldfogel-Fan Instruments}
+    \begin{itemize}
+        \item \textit{Definition:} Demographics from nearby markets (e.g., average income).
+        \item \textit{Advantage:} Capture spatial spillovers; useful in zone pricing contexts.
+        \item \textit{Limitation:} Depend on pricing geography and data resolution.
+    \end{itemize}
+
+    \item \textbf{Exogenous Market Structure Shifts}
+    \begin{itemize}
+        \item \textit{Definition:} Firm entry/exit, mergers, or ownership changes.
+        \item \textit{Advantage:} Change competitive intensity; often impactful.
+        \item \textit{Limitation:} Need exogeneity and observable events.
+    \end{itemize}
+
+    \item \textbf{Optimal Instruments}
+    \begin{itemize}
+        \item \textit{Definition:} Function of observables maximizing moment efficiency.
+        \item \textit{Form:} \[ z^*_{jt} = \psi^{-1}_{jt} \mathbb{E} \left[ \frac{\partial \xi_{jt}(\theta)}{\partial \theta} \middle| z_{jt} \right] \]
+        \item \textit{Limitation:} Infeasible without full distributional knowledge of $\xi$.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{3.Motivation for Adding Supply Side}
+\begin{itemize}
+    \item Demand-only estimation can identify \( \theta_1, \theta_2 \), but precision may be low.
+    \item Instrumental variables may be weak or hard to justify.
+    \item Supply-side modeling adds additional moment conditions.
+    \item Enables interpretation of marginal cost and markup.
+    \item Supports policy counterfactuals (mergers, taxes, pricing rules).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{3.How to Add Supply Side Estimation}
+\begin{enumerate}
+    \item Estimate demand parameters \( \theta = (\theta_1, \theta_2) \) using observed shares and instruments.
+    \item Recover mean utility \( \delta_{jt} \) via share inversion.
+    \item Compute implied markups from demand elasticities:
+    \[
+    mc_{jt} = p_{jt} - \text{markup}_{jt}(\theta)
+    \]
+    \item Assume a marginal cost function:
+    \[
+    mc_{jt} = w_{jt}' \gamma + \omega_{jt}
+    \]
+    \item Construct additional GMM moments:
+    \[
+    \mathbb{E}[\omega_{jt}(\theta, \gamma) \cdot w_{jt}] = 0
+    \]
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{3.What Does Supply Side Estimation Give Us?}
+\begin{itemize}
+    \item \textbf{Improved identification of \(\theta_1\)}:
+    \begin{itemize}
+        \item Exploits cost-side variation.
+        \item Less dependent on demand-side instruments.
+    \end{itemize}
+    \item \textbf{Estimation of cost structure parameters \(\gamma\)}:
+    \begin{itemize}
+        \item Provides insight into marginal cost behavior.
+        \item Useful for merger simulations and policy evaluation.
+    \end{itemize}
+    \item \textbf{Full structural interpretation}:
+    \begin{itemize}
+        \item Enables joint analysis of demand and supply.
+        \item Supports realistic counterfactuals.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+% Section 4
+\section{Working paper}
+\begin{frame}{4.Working paper}
+\centering
+
+\large\textbf{Identification in Differentiated Products Markets Using Market Level Data} \\[1.5em]
+
+\large Steven T. Berry \\
+Philip A. Haile \\[1em]
+
+\small
+\textbf{Abstract } \\[0.8em]
+
+This paper studies \textit{nonparametric identification} in differentiated products markets using only market-level data. It allows for \textit{random utility models}, endogenous product characteristics, and unobserved heterogeneity on both demand and supply sides. \\[0.6em]
+
+Two identification strategies are proposed: one based on \textit{instrumental variables}, and another using a \textit{change-of-variables approach}. \\[0.6em]
+
+The results formalize \textbf{Bresnahan’s (1982)} test for distinguishing between oligopoly models.
+
+\end{frame}
+
+\begin{frame}{4.Assumption 1a and 1b: Structure of Utility}
+\textbf{Assumption 1a:} For all $\tilde{u}t \in \mathcal{U}$, \quad $\tilde{u}{it}(x_{jt}, p_{jt}, \xi_{jt}) = \mu_t(\delta_{jt}, x_{jt}^{(2)}, p_{jt})$ \quad where $\mu_t$ is strictly increasing in $\delta_{jt}$.
+
+\vspace{0.3cm}
+\textbf{Assumption 1b:} There exists a monotonic function $\Gamma_t$ such that \
+\quad $\Gamma_t(\tilde{u}{it}(x{jt}, p_{jt}, \xi_{jt})) = \mu_t(\delta_{jt}, x_{jt}^{(2)}, \omega_{it}) - p_{jt}$
+
+\vspace{0.3cm}
+\textit{Motivation:} These assumptions impose quasilinearity and index restrictions to simplify the indirect utility specification and facilitate identification through monotonic transformations.
+\end{frame}
+
+\begin{frame}{4.Assumptions 2 and 3: Market Behavior and Substitution}
+\textbf{Assumption 2:} Market shares $s_j$ are strictly positive for all $j$ at any observed ${x_{kt}, p_{kt}, \xi_{kt}}_{k \in \mathcal{J}}$.
+
+\vspace{0.3cm}
+\textbf{Assumption 3 (Connected Substitutes):} The directed graph of substitutes $\Sigma(\mathcal{J})$ is strongly connected: for all ${x_{jt}, p_{jt}, \xi_{jt}}_{j \in \mathcal{J}}$, there exists a substitution path between any pair $j, j'$.
+
+\vspace{0.3cm}
+\textit{Motivation:} These ensure observability of all products and interconnectedness of substitution patterns, avoiding isolated or unused products.
+\end{frame}
+
+\begin{frame}{4.Assumptions 4 and 5: Instrument Validity and Completeness}
+\textbf{Assumption 4:} \quad $\mathbb{E}[\xi_{jt} \mid \tilde{z}_t, x_t] = 0$ \quad for all $j$ (instrument exogeneity)
+
+\vspace{0.3cm}
+\textbf{Assumption 5:} \quad For any $B(s_t, p_t)$ with finite expectation, \\n$\mathbb{E}[B(s_t, p_t) \mid \tilde{z}_t, x_t] = 0 \Rightarrow B(s_t, p_t) = 0$ almost surely
+
+\vspace{0.3cm}
+\textit{Motivation:} These conditions validate IV strategies and ensure the model is rich enough (completeness) to identify structural parameters from observable variation.
+\end{frame}
+
+\begin{frame}{4.Proof of Theorem 1 (Identification of \(\xi_{jt}\))}
+\textbf{Step-by-step:}
+\begin{itemize}
+  \item Equation: $x_{jt} + \xi_{jt} = \sigma_j^{-1}(s_t, p_t)$
+  \item Take conditional expectation: \
+    $\mathbb{E}[\xi_{jt} | \tilde{z}_t, x_t] = \mathbb{E}[\sigma_j^{-1}(s_t, p_t) | \tilde{z}_t, x_t] - x_{jt}$
+  \item By Assumption 4: $\mathbb{E}[\xi_{jt} | \tilde{z}_t, x_t] = 0$, so:
+    \[ \mathbb{E}[\sigma_j^{-1}(s_t, p_t) | \tilde{z}_t, x_t] - x_{jt} = 0 \]
+  \item Suppose an alternative function $\bar{\sigma}_j^{-1}$ satisfies:
+    \[ \mathbb{E}[\bar{\sigma}_j^{-1}(s_t, p_t) - x_{jt} | \tilde{z}_t, x_t] = 0 \]
+  \item Define $B(s_t, p_t) = \sigma_j^{-1}(s_t, p_t) - \bar{\sigma}_j^{-1}(s_t, p_t)$, so:
+    \[ \mathbb{E}[B(s_t, p_t) | \tilde{z}_t, x_t] = 0 \]
+  \item By Assumption 5 (completeness): $B = 0$ a.s. \Rightarrow $
+    $\bar{\sigma}_j^{-1} = \sigma_j^{-1}$
+    
+\end{itemize}
+\end{frame}
+
+\begin{frame}{4.Assumptions 6--8 (Supply Side Identification)}
+
+\textbf{Assumption 6.} \textit{Support Condition ("Covering Condition")}\\
+\smallskip
+\quad $\text{supp}\ p_t \mid \left\{x_{jt}, \xi_{jt}\right\}_{j \in \mathcal{J}} \ \supseteq \ \text{supp} \left( \mu_1(\delta_{1t}, \omega_{it}), \ldots, \mu_J(\delta_{Jt}, \omega_{it}) \right)_t \mid \left\{x_{jt}, \xi_{jt} \right\}_{j \in \mathcal{J}}$\\
+\smallskip
+This condition ensures that observed prices are rich enough to "cover" variation in consumers’ willingness to pay. 
+
+\bigskip
+\textbf{Assumption 7.} \textit{Differentiability of Market Shares}\\
+\smallskip
+\quad $\sigma_j(\delta_t, p_t)$ is continuously differentiable w.r.t. $p_k$ for all $j, k \in \mathcal{J}$.\\
+\smallskip
+This is needed to apply the first-order conditions and identify supply-side behavior.
+
+\bigskip
+\textbf{Assumption 8.} \textit{Structure of Marginal Costs and Residual Revenue Function}\\
+\begin{itemize}
+    \item[(i)] $mc_j(q_{jt}, \zeta_{jt})$ is strictly increasing in $\zeta_{jt}$
+    \item[(ii)] $u_j(\delta_{jt}, p_{jt}, \omega_{it})$ is strictly decreasing in $p_{jt}$
+    \item[(iii)] There exists a function $\psi_j$ such that:
+    \[
+    mc_j(M_t s_{jt}, \zeta_{jt}) = \psi_j(s_t, M_t, D_t(s_t, p_t), p_t)
+    \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{4.Theorems}
+
+\textbf{Theorem 2.} \textit{Under Assumptions 1b and 2--6, the joint distribution of}
+\[ (v_{i1t}, \ldots, v_{iJt}) \text{ conditional on any } \{x_{kt}, p_{kt}, \xi_{kt}\}_{k \in \mathcal{J}} \in \chi^{\mathcal{J}} \text{ is identified.} \]
+
+\vspace{0.5cm}
+
+\textbf{Theorem 3.} \textit{Suppose that Assumptions 1a, 2--5, 7 and 8 hold. Then for all $j$}
+\begin{itemize}
+    \item[(i)] $\eta_{jt}$ is identified for all $t$, and
+    \item[(ii)] if $\psi_j$ is known, the function $mc_j(q_{jt}, \zeta_{jt})$ is identified on the support of $(q_{jt}, \zeta_{jt})$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{4.Assumptions 9--13 for Identification}
+  \textbf{Assumption 9.} There is a unique vector of equilibrium prices associated with any $(\delta, \zeta)$. \\
+  \vspace{0.2cm}
+  \textbf{Assumption 10.} The random variables $(\xi_1, \ldots, \xi_J, \eta_1, \ldots, \eta_J)$ have a positive joint density $f_{\xi,\eta}$ on $\mathbb{R}^{2J}$. \\
+  \vspace{0.2cm}
+  \textbf{Assumption 11.} The vector function $\left(\sigma_1^{-1}, \ldots, \sigma_J^{-1}, \pi_1^{-1}, \ldots, \pi_J^{-1} \right)'$ has continuous partial derivatives and nonzero Jacobian determinant. \\
+  \vspace{0.2cm}
+  \textbf{Assumption 12.} $(x_t, z_t) \perp\!\!\!\perp (\xi_t, \eta_t)$. \\
+  \vspace{0.2cm}
+  \textbf{Assumption 13.} $\operatorname{supp}(x_t, z_t) = \mathbb{R}^{2J}$.
+\end{frame}
+
+\begin{frame}{4.Theorem 4 and 5: Identification in Differentiated Product Markets}
+
+\textbf{Theorem 4.} \textit{Suppose Assumptions 1a, 2, 3, and 8--13 hold. Then for all $j$
+\begin{itemize}
+    \item[(i)] $\xi_{jt}$ is identified for all $t$, and
+    \item[(ii)] the function $s_j\left(\{x_{kt}, p_{kt}, \xi_{kt}\}_{k \in \mathcal{J}}\right)$ is identified on $\mathcal{X}^{\mathcal{J}}$.
+\end{itemize}}
+
+\vspace{1em}
+
+\textbf{Theorem 5.} \textit{Suppose Assumptions 1b, 2, 3, 6, and 8--13 hold. Then the joint distribution of $\left(v_{i1t}, \ldots, v_{iJt}\right)$ conditional on any $\{x_{kt}, p_{kt}, \xi_{kt}\}_{k \in \mathcal{J}} \in \mathcal{X}^{\mathcal{J}}$ is identified.}
+
+\end{frame}
+
+\begin{frame}{4.Discriminating Between Oligopoly Models}
+\textbf{Motivation:} Can different models of firm conduct (e.g., marginal cost pricing vs. monopolistic pricing) be distinguished empirically?
+
+\textbf{Main Idea:} Use variations in the residual marginal revenue function $\psi_j$ to test supply models.
+
+\textbf{Key Setup:}
+\begin{itemize}
+  \item Under Assumption 8, marginal cost satisfies:
+  \begin{equation*}
+    mc_j(q_{jt}, \zeta_{jt}) = \psi_j(s_t, D_t(s_t, p_t), p_t)
+  \end{equation*}
+  \item Let $\psi_j^0$ and $\psi_j^1$ denote marginal revenue functions under the null and alternative hypotheses, respectively.
+\end{itemize}
+
+\textbf{Identification via Rotations:}
+\begin{itemize}
+  \item Suppose market conditions change such that $\psi_j$ rotates (e.g., due to instrument variation).
+  \item If null hypothesis is true: implied marginal cost $mc_j^0$ should remain invariant.
+  \item If under rotation, marginal cost is instead $mc_j^1 \neq mc_j^0$: null is falsified.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{4.Discriminating Between Oligopoly Models (Visual)}
+\textbf{Illustration of Model Testing:}
+
+\begin{center}
+    \includegraphics[width=0.42\textwidth]{figure/figure2.png}
+    \hfill
+    \includegraphics[width=0.42\textwidth]{figure/figure3.png}
+
+    \vspace{0.5em}
+    {\small Figure 2: Mapping of $E_t$ to marginal cost; Figure 3: Rotation rejects false null.}
+\end{center}
+\end{frame}
+
+
+
+\end{document}
